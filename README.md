@@ -28,23 +28,6 @@
 (base) D:\nobuakiy\projects\gaiji>mkdir resultdata
 
 (base) D:\nobuakiy\projects\gaiji>python gaiji.py
-ファイル名,行数,外字件数,変換不可外字件数
-DATAFILE1.DAT, 5, 6, 1
-DATAFILE2.DAT, 10800, 0, 0
-
-処理時間: 9.8680592
-
-外字出現件数
-F040: 1
-F041: 1
-F042: 1
-F043: 1
-F044: 1
-
-TRANS_MAP.csvに記述のない外字
-F340: 1
-
-(base) D:\nobuakiy\projects\gaiji>python gaiji.py
 ファイル名, 行数, 外字件数, 変換不可外字件数
 DATAFILE1.DAT, 5, 6, 1
 DATAFILE2.DAT, 10800, 0, 0
