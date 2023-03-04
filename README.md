@@ -21,36 +21,45 @@
 * テストデータのうち、外字が入っているのは DATAFILE1.DATのみです。
 * 速度調査をするときには、copy_datafile.cmdを実行して、データファイルの数を増やしてください。
 * testdata/DATAFILE2.DATは、1行1690文字、1万行、31Mbyte近くあります。
-* 私の環境のpythonは、3.9.15です。python2では動かないと思います。python3なら、たぶん動く。
+* 私の環境のpythonは、3.9.15です。
 
-## 実行例 copy_datafile.cmdでファイルを増やした後のもの
+## 実行例
 ```DOS
 (base) D:\nobuakiy\projects\gaiji>mkdir resultdata
 
 (base) D:\nobuakiy\projects\gaiji>python gaiji.py
 ファイル名,行数,外字件数,変換不可外字件数
-DATAFILE1.DAT,5,6,1
-DATAFILE2.DAT,10800,0,0
-DATAFILE3.DAT,10800,0,0
-DATAFILE4.DAT,10800,0,0
-DATAFILE5.DAT,10800,0,0
-DATAFILE6.DAT,10800,0,0
-DATAFILE7.DAT,10800,0,0
-DATAFILE8.DAT,10800,0,0
-DATAFILE9.DAT,10800,0,0
-DATAFILE10.DAT,10800,0,0
+DATAFILE1.DAT, 5, 6, 1
+DATAFILE2.DAT, 10800, 0, 0
 
-処理時間: 65.8757421
+処理時間: 9.8680592
 
 外字出現件数
-0xf040 : 1
-0xf041 : 1
-0xf042 : 1
-0xf043 : 1
-0xf044 : 1
+F040: 1
+F041: 1
+F042: 1
+F043: 1
+F044: 1
 
 TRANS_MAP.csvに記述のない外字
-0xf340 : 1
+F340: 1
+
+(base) D:\nobuakiy\projects\gaiji>python gaiji.py
+ファイル名, 行数, 外字件数, 変換不可外字件数
+DATAFILE1.DAT, 5, 6, 1
+DATAFILE2.DAT, 10800, 0, 0
+
+処理時間: 7.8049874
+
+外字出現件数
+F040: 1
+F041: 1
+F042: 1
+F043: 1
+F044: 1
+
+TRANS_MAP.csvに記述のない外字
+F340: 1
 
 (base) D:\nobuakiy\projects\gaiji>
 ```
@@ -61,49 +70,34 @@ CythonでC言語に変換するところから、やっているが、pydファ�
 処理時間は、約11秒で普通のPythonの1/6になっている。十分な処理速度で、これ以上の高速化は必要ない。
 これはSSDの場合の速度です。
 
-Cythonで変換している時のメッセージを見てみると、Python2として解析している。
-Python2では動かないかと思ったが、バイト配列の処理しかしてないからあまり問題なかったらしい。
-printの書き方とオプションの指定がPython2とPython3でちょっと違う。
-元のgaiji.pyでは、1か所にエラーが出てくる。
-そこは直しても、やはり出力に違いが出ている。Python3としてCythonに解析してもらいたいが、ググってみても、Cythonへの指定方法がよくわからない。
-まぁ、これで動いているなら、とりあえずいいことにする。
-
 業務プログラムとして実行するなら、1分なのか10秒なのかは大した違いがない。変換テーブル(TRANS_MAP.csv)を作成しているなら、はやいほうがうれしいかも。
 
 ```DOC
 (base) D:\nobuakiy\projects\gaiji>python setup.py build_ext --inplace
 Compiling gaijicython.pyx because it changed.
 [1/1] Cythonizing gaijicython.pyx
-D:\Programs\miniconda3\lib\site-packages\Cython\Compiler\Main.py:369: FutureWarning: Cython directive 'language_level' not set, using 2 for now (Py2). This will change in a later release! File: D:\nobuakiy\projects\gaiji\gaijicython.pyx
-  tree = Parsing.p_module(s, pxd, full_module_name)
 gaijicython.c
-gaijicython.c(5025): warning C4244: '関数': 'Py_ssize_t' から 'int' への変換です。データが失われる可能性があります。
+gaijicython.c(5204): warning C4244: '関数': 'Py_ssize_t' から 'int' への変換です。データが失われる可能性があります。
    ライブラリ build\temp.win-amd64-cpython-39\Release\gaijicython.cp39-win_amd64.lib とオブジェクト build\temp.win-amd64-cpython-39\Release\gaijicython.cp39-win_amd64.exp を作成中
 コード生成しています。
 コード生成が終了しました。
 
 (base) D:\nobuakiy\projects\gaiji>python callgaiji.py
-ファイル名,行数,外字件数,変換不可外字件数
-('DATAFILE1.DAT', 5, 6, 1)
-('DATAFILE2.DAT', 10800, 0, 0)
-('DATAFILE3.DAT', 10800, 0, 0)
-('DATAFILE4.DAT', 10800, 0, 0)
-('DATAFILE5.DAT', 10800, 0, 0)
-('DATAFILE6.DAT', 10800, 0, 0)
-('DATAFILE7.DAT', 10800, 0, 0)
-('DATAFILE8.DAT', 10800, 0, 0)
-('DATAFILE9.DAT', 10800, 0, 0)
+ファイル名, 行数, 外字件数, 変換不可外字件数
+DATAFILE1.DAT, 5, 6, 1
+DATAFILE2.DAT, 10800, 0, 0
 
 外字出現件数
-('F040', ':', 1)
-('F041', ':', 1)
-('F042', ':', 1)
-('F043', ':', 1)
-('F044', ':', 1)
+F040: 1
+F041: 1
+F042: 1
+F043: 1
+F044: 1
 
 TRANS_MAP.csvに記述のない外字
-('F340', ':', 1)
-('\n処理時間:', 10.8447821)
+F340: 1
+
+処理時間: 1.2350613
 
 (base) D:\nobuakiy\projects\gaiji>
 ```
