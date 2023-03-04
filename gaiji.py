@@ -29,10 +29,11 @@ print (file_list)
 
 # 全てのファイルに対して処理
 for filename in file_list:
+    out_filename = 'out_' + filename
     with open(filename, "rb") as f:
         # 1M単位で、一気読み
         input_buffer = f.read(buff_length)
-        output_buffer = bytearray(input_buffer)
+        output_buffer = bytearray()
         is_kanji_first = False
         while input_buffer:
             for ch in input_buffer:
@@ -42,13 +43,20 @@ for filename in file_list:
                     if gaiji_start <= ch1 and ch1 <= gaiji_end:
                         gaiji = (ch1 << 8) + ch2
                         converted = trans_map[gaiji] 
+                        output_buffer.append((converted >> 8) & 0xff)
+                        output_buffer.append(converted & 0xff)
+                    else:
+                        output_buffer.append(ch1)
+                        output_buffer.append(ch2)
                 elif (kanji_start1 <= ch and ch <= kanji_end1) or (kanji_start2 <= ch and ch <= kanji_end2):
                     is_kanji_first = True
                     ch1 = ch
-
                 else:
                     if ch == CHAR_LF:
                         line_count += 1
-
+                    output_buffer.append(ch)
+            fout = open(out_filename, "wb")
+            fout.write(output_buffer)
+            output_buffer.clear()
             input_buffer = f.read(buff_length)
 
