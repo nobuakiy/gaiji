@@ -14,11 +14,11 @@
 * filelist.txtに、入力ファイルの一覧を書いてください。先頭が # のものは、スキップします。
 * 入力ファイルの文字コードは、SHIFT_JIS固定です。
 * テストデータのうち、外字が入っているのは DATAFILE1.DATのみです。
-* 速度調査をするときには、copy_datafile.cmdを実行して、
+* 速度調査をするときには、copy_datafile.cmdを実行して、データファイルの数を増やしてください。
 * DATAFILE2.DATは、1行1690文字、1万行、31Mbyte近くあります。
 * 私の環境のpythonは、3.9.15です。python2では動かないと思います。python3なら、たぶん動く。
 
-実行例
+実行例 copy_datafile.cmdでファイルを増やした後のもの
 ```DOS
 (base) D:\nobuakiy\projects\gaiji>python gaiji.py
 ファイル名,行数,外字件数,変換不可外字件数
