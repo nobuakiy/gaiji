@@ -81,9 +81,10 @@ def main():
                             count_line += 1
                         output_buffer.append(ch)
 
-                fout = open(out_filename, "wb")
-                fout.write(output_buffer)
+                with open(out_filename, "wb") as fout:
+                    fout.write(output_buffer)
                 output_buffer.clear()
+
                 input_buffer = f.read(buff_length)
 
             print(filename, count_line, count_gaiji, not_converted_gaiji, sep=',')
@@ -95,8 +96,8 @@ print('\n処理時間:', time.perf_counter() - start)
 
 print('\n外字出現件数')
 for key in converted_map:
-    print(hex(key), ':', converted_map[key])
+    print(hex(key)[2:].upper(), ':', converted_map[key])
 
 print('\nTRANS_MAP.csvに記述のない外字')
 for key in not_converted_map:
-    print(hex(key), ':', not_converted_map[key])
+    print(hex(key)[2:].upper(), ':', not_converted_map[key])
