@@ -93,10 +93,10 @@ start = time.perf_counter()
 main()
 print('\n処理時間:', time.perf_counter() - start)
 
-print('\nconverted')
+print('\n外字出現件数')
 for key in converted_map:
     print(hex(key), ':', converted_map[key])
 
-print('\nnot converted')
+print('\nTRANS_MAP.csvに記述のない外字')
 for key in not_converted_map:
     print(hex(key), ':', not_converted_map[key])
