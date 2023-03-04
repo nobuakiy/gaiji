@@ -1,2 +1,4 @@
 out_*
 DATAFILE*.DAT
+.vscode
+*.ipynb
