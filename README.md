@@ -20,7 +20,7 @@
 
 実行例
 ```DOS
-(base) D:\nobuakiy\projects\gaiji>python gaiji.py   
+(base) D:\nobuakiy\projects\gaiji>python gaiji.py
 ファイル名,行数,外字件数,変換不可外字件数
 DATAFILE1.DAT,5,6,1
 DATAFILE2.DAT,10800,0,0
@@ -33,16 +33,16 @@ DATAFILE8.DAT,10800,0,0
 DATAFILE9.DAT,10800,0,0
 DATAFILE10.DAT,10800,0,0
 
-処理時間: 64.7598322
+処理時間: 65.8757421
 
-converted
+外字出現件数
 0xf040 : 1
 0xf041 : 1
 0xf042 : 1
 0xf043 : 1
 0xf044 : 1
 
-not converted
+TRANS_MAP.csvに記述のない外字
 0xf340 : 1
 
 (base) D:\nobuakiy\projects\gaiji>
