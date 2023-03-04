@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+# cython: language_level=3, boundscheck=False
 """
 外字変換プログラム
 """
@@ -35,7 +37,7 @@ def main_process():
         file_list.append(fname.rstrip('\r\n'))
 
     # 全てのファイルに対して処理
-    print("ファイル名,行数,外字件数,変換不可外字件数")
+    print("ファイル名, 行数, 外字件数, 変換不可外字件数")
     for filename in file_list:
         out_filename = output_dir + '\\' + filename
         with open(input_dir + '\\' + filename, "rb") as f:
@@ -90,18 +92,20 @@ def main_process():
 
                 input_buffer = f.read(buff_length)
 
-            print(filename, count_line, count_gaiji, not_converted_gaiji)
+            print("{0}, {1}, {2}, {3}".format(filename, count_line, count_gaiji, not_converted_gaiji))
+
 
     print('\n外字出現件数')
     for key in converted_map:
-        print(hex(key)[2:].upper(), ':', converted_map[key])
+        print("{0}: {1}".format(hex(key)[2:].upper(), converted_map[key]))
 
     print('\nTRANS_MAP.csvに記述のない外字')
     for key in not_converted_map:
-        print(hex(key)[2:].upper(), ':', not_converted_map[key])
+        print("{0}: {1}".format(hex(key)[2:].upper(), not_converted_map[key]))
+
 
 def timeit():
     start = time.perf_counter()
     main_process()
-    print('\n処理時間:', time.perf_counter() - start)
+    print('\n処理時間: {0}'.format(time.perf_counter() - start))
 
