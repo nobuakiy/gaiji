@@ -13,6 +13,7 @@
 | testdata/DATAFILE2.DAT | 速度計測用テストデータ。 |
 | copy_datafile.cmd | 速度計測用のDATAFILE2.DATをコピーして数を増やす |
 
+## 説明
 * TRANS_MAP.csvは変換テーブルです。SHIFT_JISの文字コードを16進数表記で入れてください
 * TRANS_MAP.csv は、速度のチェックのために500件ぐらい入ってますが、文字コードとしてあり得ないものも入っています。
 * filelist.txtに、入力ファイルの一覧を書いてください。先頭が # のものは、スキップします。
@@ -22,7 +23,7 @@
 * testdata/DATAFILE2.DATは、1行1690文字、1万行、31Mbyte近くあります。
 * 私の環境のpythonは、3.9.15です。python2では動かないと思います。python3なら、たぶん動く。
 
-実行例 copy_datafile.cmdでファイルを増やした後のもの
+## 実行例 copy_datafile.cmdでファイルを増やした後のもの
 ```DOS
 (base) D:\nobuakiy\projects\gaiji>mkdir resultdata
 
@@ -54,7 +55,14 @@ TRANS_MAP.csvに記述のない外字
 (base) D:\nobuakiy\projects\gaiji>
 ```
 
-Cythonを使ってみた
+## Cythonを使ってみた。
+CythonでC言語に変換するところから、やっているが、pydファイルがあれば、最後の python callgaiji.py だけで実行できる。
+変換するところからやるには、MicrosoftのCコンパイラのインストールが必要になる。
+処理時間は、約11秒で普通のPythonの1/6になっている。十分だね。
+これはSSDの場合の速度です。
+
+業務プログラムとして実行するなら、1分なのか10秒なのかは大した違いがない。変換テーブル(TRANS_MAP.csv)を作成しているなら、はやいほうがうれしいかも。
+
 ```DOC
 (base) D:\nobuakiy\projects\gaiji>python setup.py build_ext --inplace
 Compiling gaijicython.pyx because it changed.
