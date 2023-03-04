@@ -1,4 +1,7 @@
 out_*
-DATAFILE*.DAT
+DATAFILE[3-9].DAT
+DATAFILE10.DAT
 .vscode
 *.ipynb
+/build/
+*.c

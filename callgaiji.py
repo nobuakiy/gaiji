@@ -1,0 +1,3 @@
+import gaijicython
+
+gaijicython.timeit()

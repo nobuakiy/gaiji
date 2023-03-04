@@ -1,25 +1,25 @@
-# -*- coding: UTF-8 -*-
 """
 外字変換プログラム
 """
 import time
 
-# 初期設定 定数
-input_dir = 'testdata'
-output_dir = 'resultdata'
-buff_length = 1000 * 1000 # 1Mbytes
-kanji_start1 = int('80', 16)
-kanji_end1   = int('9F', 16)
-kanji_start2 = int('E0', 16)
-kanji_end2   = int('FF', 16)
-gaiji_start = int('F0', 16)
-gaiji_end   = int('F9', 16)
-CHAR_LF = 13  # b'\n'
+def main_process():
 
-converted_map = {}
-not_converted_map = {}
+    # 初期設定 定数
+    input_dir = 'testdata'
+    output_dir = 'resultdata'
 
-def main():
+    buff_length = 1000 * 1000 # 1Mbytes
+    kanji_start1 = int('80', 16)
+    kanji_end1   = int('9F', 16)
+    kanji_start2 = int('E0', 16)
+    kanji_end2   = int('FF', 16)
+    gaiji_start = int('F0', 16)
+    gaiji_end   = int('F9', 16)
+    CHAR_LF = 13  # b'\n'
+
+    converted_map = {}
+    not_converted_map = {}
 
     # 外字変換テーブル取得
     trans_map = {}
@@ -90,17 +90,18 @@ def main():
 
                 input_buffer = f.read(buff_length)
 
-            print(filename, count_line, count_gaiji, not_converted_gaiji, sep=',')
+            print(filename, count_line, count_gaiji, not_converted_gaiji)
 
+    print('\n外字出現件数')
+    for key in converted_map:
+        print(hex(key)[2:].upper(), ':', converted_map[key])
 
-start = time.perf_counter()
-main()
-print('\n処理時間:', time.perf_counter() - start)
+    print('\nTRANS_MAP.csvに記述のない外字')
+    for key in not_converted_map:
+        print(hex(key)[2:].upper(), ':', not_converted_map[key])
 
-print('\n外字出現件数')
-for key in converted_map:
-    print(hex(key)[2:].upper(), ':', converted_map[key])
+def timeit():
+    start = time.perf_counter()
+    main_process()
+    print('\n処理時間:', time.perf_counter() - start)
 
-print('\nTRANS_MAP.csvに記述のない外字')
-for key in not_converted_map:
-    print(hex(key)[2:].upper(), ':', not_converted_map[key])
