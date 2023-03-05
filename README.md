@@ -28,23 +28,6 @@
 (base) D:\nobuakiy\projects\gaiji>mkdir resultdata
 
 (base) D:\nobuakiy\projects\gaiji>python gaiji.py
-ファイル名,行数,外字件数,変換不可外字件数
-DATAFILE1.DAT, 5, 6, 1
-DATAFILE2.DAT, 10800, 0, 0
-
-処理時間: 9.8680592
-
-外字出現件数
-F040: 1
-F041: 1
-F042: 1
-F043: 1
-F044: 1
-
-TRANS_MAP.csvに記述のない外字
-F340: 1
-
-(base) D:\nobuakiy\projects\gaiji>python gaiji.py
 ファイル名, 行数, 外字件数, 変換不可外字件数
 DATAFILE1.DAT, 5, 6, 1
 DATAFILE2.DAT, 10800, 0, 0
@@ -67,10 +50,8 @@ F340: 1
 ## Cythonを使ってみた。
 CythonでC言語に変換するところから、やっているが、pydファイルがあれば、最後の python callgaiji.py だけで実行できる。
 変換するところからやるには、MicrosoftのCコンパイラのインストールが必要になる。
-処理時間は、約11秒で普通のPythonの1/6になっている。十分な処理速度で、これ以上の高速化は必要ない。
+処理時間は、普通のPythonの約1/6になっている。十分な処理速度で、これ以上の高速化は必要ない。
 これはSSDの場合の速度です。
-
-業務プログラムとして実行するなら、1分なのか10秒なのかは大した違いがない。変換テーブル(TRANS_MAP.csv)を作成しているなら、はやいほうがうれしいかも。
 
 ```DOC
 (base) D:\nobuakiy\projects\gaiji>python setup.py build_ext --inplace
